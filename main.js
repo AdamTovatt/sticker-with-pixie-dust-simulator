@@ -38,6 +38,11 @@ const textureInput = document.getElementById("textureInput");
 const maskInput = document.getElementById("maskInput");
 const grainSizeSlider = document.getElementById("grainSizeSlider");
 const grainSizeValue = document.getElementById("grainSizeValue");
+const toggleConfigBtn = document.getElementById("toggleConfigBtn");
+const configBox = document.getElementById("config-box");
+
+// Log button to check if it's selected correctly
+console.log("Toggle button:", toggleConfigBtn);
 
 // Listen for checkbox changes
 invertMaskCheckbox.addEventListener("change", (event) => {
@@ -82,6 +87,19 @@ maskInput.addEventListener("change", (event) => {
       updatePlane(); // Update the plane with the new mask
     };
     reader.readAsDataURL(event.target.files[0]);
+  }
+});
+
+// Listen for the collapse/expand button click
+toggleConfigBtn.addEventListener("click", () => {
+  // Toggle the 'collapsed' class on the config box
+  configBox.classList.toggle("collapsed");
+
+  // Change button text based on whether the box is collapsed
+  if (configBox.classList.contains("collapsed")) {
+    toggleConfigBtn.textContent = "Expand";
+  } else {
+    toggleConfigBtn.textContent = "Collapse";
   }
 });
 

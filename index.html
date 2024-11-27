@@ -9,34 +9,38 @@
   <body>
     <!-- Config box -->
     <div id="config-box">
-      <label>
-        <input type="checkbox" id="invertMaskCheckbox" checked />
-        Invert Mask
-      </label>
-      <br />
-      <label for="numGroupsSlider">Number of Glitter Groups: </label>
-      <input type="range" id="numGroupsSlider" min="1" max="10" value="4" />
-      <span id="numGroupsValue">4</span>
-      <br />
-      <!-- Texture file input -->
-      <label for="textureInput">Choose texture:</label>
-      <input type="file" id="textureInput" accept="image/*" />
-      <br />
-      <!-- Mask texture file input -->
-      <label for="maskInput">Choose mask texture:</label>
-      <input type="file" id="maskInput" accept="image/*" />
-      <br />
-      <!-- Glitter Size Slider -->
-      <label for="grainSizeSlider">Grain Size: </label>
-      <input
-        type="range"
-        id="grainSizeSlider"
-        min="0.001"
-        max="0.01"
-        value="0.004"
-        step="0.001"
-      />
-      <span id="grainSizeValue">0.004</span>
+      <div class="config-content">
+        <label>
+          <input type="checkbox" id="invertMaskCheckbox" checked />
+          Invert Mask
+        </label>
+        <br />
+        <label for="numGroupsSlider">Number of Glitter Groups: </label>
+        <input type="range" id="numGroupsSlider" min="1" max="10" value="4" />
+        <span id="numGroupsValue">4</span>
+        <br />
+        <!-- Texture file input -->
+        <label for="textureInput">Choose texture:</label>
+        <input type="file" id="textureInput" accept="image/*" />
+        <br />
+        <!-- Mask texture file input -->
+        <label for="maskInput">Choose mask texture:</label>
+        <input type="file" id="maskInput" accept="image/*" />
+        <br />
+        <!-- Glitter Size Slider -->
+        <label for="grainSizeSlider">Grain Size: </label>
+        <input
+          type="range"
+          id="grainSizeSlider"
+          min="0.001"
+          max="0.01"
+          value="0.004"
+          step="0.001"
+        />
+        <span id="grainSizeValue">0.004</span>
+      </div>
+      <!-- Button to collapse/expand the config box -->
+      <button id="toggleConfigBtn">Collapse</button>
     </div>
     <script type="module" src="./main.js"></script>
   </body>

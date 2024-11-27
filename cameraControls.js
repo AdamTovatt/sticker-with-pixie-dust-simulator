@@ -4,9 +4,14 @@ export function addCameraControls(camera, radius, cube) {
   let isDragging = false;
   let previousMousePosition = { x: 0, y: 0 };
 
+  let isTouching = false;
+  let previousTouch = { x: 0, y: 0 };
+
   // Mouse control: drag to rotate
-  document.addEventListener("mousedown", () => {
+  document.addEventListener("mousedown", (event) => {
     isDragging = true;
+    previousMousePosition.x = event.clientX;
+    previousMousePosition.y = event.clientY;
   });
 
   document.addEventListener("mouseup", () => {
@@ -15,17 +20,48 @@ export function addCameraControls(camera, radius, cube) {
 
   document.addEventListener("mousemove", (event) => {
     if (isDragging) {
-      const deltaX = event.movementX || 0;
-      const deltaY = event.movementY || 0;
+      const deltaX = event.clientX - previousMousePosition.x;
+      const deltaY = event.clientY - previousMousePosition.y;
 
       theta += deltaX * 0.01;
       phi -= deltaY * 0.01;
 
       phi = Math.max(0.1, Math.min(Math.PI - 0.1, phi)); // Clamp phi to prevent camera from flipping
+
+      previousMousePosition.x = event.clientX;
+      previousMousePosition.y = event.clientY;
     }
   });
 
-  // Zoom functionality: scroll to zoom in and out
+  // Touch control: drag to rotate (touchstart, touchmove, touchend)
+  document.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 1) {
+      isTouching = true;
+      previousTouch.x = event.touches[0].clientX;
+      previousTouch.y = event.touches[0].clientY;
+    }
+  });
+
+  document.addEventListener("touchend", () => {
+    isTouching = false;
+  });
+
+  document.addEventListener("touchmove", (event) => {
+    if (isTouching && event.touches.length === 1) {
+      const deltaX = event.touches[0].clientX - previousTouch.x;
+      const deltaY = event.touches[0].clientY - previousTouch.y;
+
+      theta += deltaX * 0.01;
+      phi -= deltaY * 0.01;
+
+      phi = Math.max(0.1, Math.min(Math.PI - 0.1, phi)); // Clamp phi to prevent camera from flipping
+
+      previousTouch.x = event.touches[0].clientX;
+      previousTouch.y = event.touches[0].clientY;
+    }
+  });
+
+  // Zoom functionality: scroll to zoom in and out (using mouse wheel)
   document.addEventListener(
     "wheel",
     (event) => {
@@ -41,6 +77,28 @@ export function addCameraControls(camera, radius, cube) {
     },
     { passive: false }
   ); // Ensures that preventDefault works
+
+  // Touch zoom functionality (using two-finger pinch)
+  document.addEventListener("touchmove", (event) => {
+    if (event.touches.length === 2) {
+      const dx = event.touches[0].clientX - event.touches[1].clientX;
+      const dy = event.touches[0].clientY - event.touches[1].clientY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (previousTouch.distance) {
+        const zoomFactor = distance - previousTouch.distance;
+        radius -= zoomFactor * 0.05; // Adjust zoom speed
+        radius = Math.max(2, Math.min(50, radius)); // Limit the zoom
+      }
+
+      previousTouch.distance = distance;
+    }
+  });
+
+  // Reset the touch distance after touchend
+  document.addEventListener("touchend", () => {
+    previousTouch.distance = null;
+  });
 
   return () => {
     // Update the camera's position based on the spherical coordinates (theta, phi, radius)

@@ -1,41 +1,75 @@
 /* General body settings */
 body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  /* Config box styling */
-  #config-box {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
-    padding: 15px;
-    border-radius: 10px; /* Rounded corners */
-    color: white; /* White text */
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2); /* Slight shadow for better visibility */
-    width: 200px; /* Set width */
-  }
-  
-  /* Label styling */
-  #config-box label {
-    font-size: 14px;
-    font-family: Arial, sans-serif;
-    display: block; /* Display labels on new lines */
-    margin-bottom: 10px; /* Space between labels */
-  }
-  
-  /* Slider styling */
-  #numGroupsSlider {
-    width: 100%;
-    margin: 10px 0;
-  }
-  
-  /* Span for displaying the number of groups */
-  #numGroupsValue {
-    font-weight: bold;
-    margin-left: 10px;
-  }
-  
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Config box styling */
+#config-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+  padding: 15px;
+  border-radius: 10px; /* Rounded corners */
+  color: white; /* White text */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2); /* Slight shadow for better visibility */
+  width: 200px; /* Set width */
+  transition: height 0.3s ease-in-out;
+  height: auto; /* Default height */
+  display: flex;
+  flex-direction: column;
+}
+
+#config-box.collapsed {
+  height: 40px; /* Small height when collapsed */
+  overflow: hidden;
+}
+
+#config-box.collapsed .config-content {
+  display: none; /* Hide all content inside the config box */
+}
+
+/* Label styling */
+#config-box label {
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  display: block; /* Display labels on new lines */
+  margin-bottom: 10px; /* Space between labels */
+}
+
+/* Slider styling */
+#numGroupsSlider {
+  width: 100%;
+  margin: 10px 0;
+}
+
+/* Span for displaying the number of groups */
+#numGroupsValue {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* Button styling for collapsing/expanding */
+#toggleConfigBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+#toggleConfigBtn:hover {
+  background-color: #45a049;
+}
+
+/* Content inside the config box */
+.config-content {
+  display: block; /* Default state: show content */
+}
